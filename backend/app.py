@@ -110,9 +110,40 @@ def users():
         except Exception as e:
             db.session.rollback()
             return jsonify({'error': 'User with this email or username already exists', 'error': str(e)}), 500
+    
+
+@app.route("/users", methods=["PATCH"])
+@jwt_required()
+def user_update():
+    data = request.get_json()
+    loggedin_user_id = get_jwt_identity()
+    
+    user = User.query.get(loggedin_user_id)
+    if user is None:
+        return jsonify({"message": "User not found"}), 404
+
+    # Validate input data
+    username = data.get("username")
+    avatar = data.get("avatar")
+    password = data.get("password")
+
+    if username:
+        user.username = username
+    if avatar:
+        user.avatar = avatar
+    if password:
+        user.password = bcrypt.generate_password_hash(password).decode('utf-8')
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "An error occurred while updating the user"}), 500
+
+    return jsonify({"success": "User updated successfully"}), 200
 
 
-@app.route("/user/<int:id>", methods=["GET", "PATCH", "DELETE"])
+@app.route("/user/<int:id>", methods=["GET", "DELETE"])
 @jwt_required()
 def user(id):
     user = User.query.get_or_404(id)
@@ -120,21 +151,10 @@ def user(id):
     if request.method == "GET":
         return make_response(jsonify(user.to_dict()), 200)
 
-    elif request.method == "PATCH":
-        data = request.get_json()
-        logged_in_user = get_jwt_identity()
-        user = User.query.get(logged_in_user)
-    
-        for key, value in data.items():
-            setattr(user, key, value)
-        db.session.add(user)
-        db.session.commit()
-        return make_response(jsonify(user.to_dict()), 200)
-
     elif request.method == "DELETE":
         db.session.delete(user)
         db.session.commit()
-        return make_response(jsonify({"message": "User deleted successfully"}), 200)
+        return make_response(jsonify({"success": "User deleted successfully"}), 200)
 
 # ============================= TODOS =============================
 

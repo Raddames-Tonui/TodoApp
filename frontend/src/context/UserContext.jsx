@@ -1,5 +1,7 @@
 import { useState, createContext, useEffect } from "react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
+
 import { server_url } from "../../config.json";
 import { useNavigate } from "react-router-dom";
 
@@ -40,6 +42,47 @@ export const UserProvider = ({ children }) => {
         });
     };
 
+
+    // UPDATE USER
+    const update_user = (username, avatar, password) => {
+      const updatePromise = fetch(`${server_url}/users`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${auth_token}`
+        },
+        body: JSON.stringify({
+          username: username,
+          avatar: avatar,
+          password: password
+        })
+      })
+      .then((response) => response.json())
+      .then(({ success, error }) => {
+        if (success) {
+          return success; 
+        } else if (error) {
+          throw new Error(error); 
+        }
+      })
+      .catch((error) => {
+        throw new Error("Network error: " + error.message); 
+      });
+    
+      // Use toast.promise to handle different states of the promise
+      toast.promise(updatePromise, {
+        loading: 'Saving...',
+        success: <b>Settings saved!</b>,
+        error: (error) => <b>{error.message || 'Could not save.'}</b>,
+      })
+      .then(() => {
+        nav("/users/tasks"); 
+      });
+    };
+    
+    
+    
+    
     // LOGIN USER
     const login_user = (email, password) => {
         fetch(`${server_url}/users/login`, {
@@ -56,11 +99,13 @@ export const UserProvider = ({ children }) => {
         .then((res) => {
             if (res.access_token) {
                 localStorage.setItem("access_token", res.access_token);
-                setAuthToken(res.access_token); // Update auth_token state
-                toast.success(res.success);
-                nav("/users/tasks");
-            } else if (res.error) {
-                toast.error(res.error);
+                setAuthToken(res.access_token); 
+                toast.success('logged in', {
+                    icon: '👏',
+                  });
+                    nav("/users/tasks");
+            } else if (res.message) {
+                toast.error(res.message);
             } else {
                 toast.error("An error occurred");
             }
@@ -96,12 +141,37 @@ export const UserProvider = ({ children }) => {
     }, [auth_token]);
         // console.log(currentUser)
 
+    // LOGOUT USER
+    const logout_user = () =>{
+        fetch(`${server_url}/users/logout`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${auth_token}`
+            }
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            if (res.success){
+                localStorage.removeItem("access_token");
+                setAuthToken(null);
+                setCurrentUser(null);
+                toast.success(res.success);
+                nav("/users/signin");
+            } else {
+                toast.error(res.error);
+            }
+        })
+    }
+
 
     const contextData = {
         currentUser,
         setCurrentUser,
         register_user,
-        login_user
+        login_user,
+        update_user,
+        logout_user
     };
 
     return (

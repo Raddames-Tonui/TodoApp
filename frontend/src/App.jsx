@@ -1,12 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./context/UserContext";
 import { TodoProvider } from "./context/TodoContext";
+
 import Layout from "./Layout";
 import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
 import Login from "./pages/Login";
 import SignUpForm from "./pages/SignUpForm";
-import AddTask from "./pages/TodoForm";
+import TodoForm from "./pages/TodoForm";
+import UpdateUser from "./pages/UpdateUser";
 
 function App() {
   return (
@@ -18,7 +20,8 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/users/signin" element={<Login />} />
               <Route path="/users/signup" element={<SignUpForm />} />
-              <Route path="/users/tasks" element={<AddTask />} />
+              <Route path="/users/tasks" element={<TodoForm />} />              
+              <Route path="/users/profile_update" element={<UpdateUser/>}/>
               <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>

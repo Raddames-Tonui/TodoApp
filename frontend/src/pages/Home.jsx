@@ -1,31 +1,31 @@
-import React, { useContext } from 'react'
-import { UserContext } from '../context/UserContext'
-import TodoList from './TodoList';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { BiSolidBadgeCheck } from 'react-icons/bi';
 
-function Home() {
-  const {currentUser} = useContext(UserContext)
+const Homepage = () => {
+    return (
+        <div className="h-screen flex flex-col justify-center items-center bg-slate-200 py-12 ">
+            <div className="bg-white p-10 rounded-lg shadow-md max-w-md w-full">
+                <div className="flex justify-center">
+                    <h1 className="flex text-2xl font-bold text-black ml-2">
+                        Todo
+                        <BiSolidBadgeCheck className="text-3xl text-green-500" />
+                    </h1>
+                </div>
+                <p className="text-center text-gray-600 mb-6">
+                    Welcome to Todo App! Your one-stop solution for managing your tasks efficiently.
+                </p>
+                <div className="flex flex-col items-center space-y-4">
+                    <Link to="/users/signup" className="relative w-40 h-12 rounded-3xl text-lg font-bold border-none overflow-hidden z-10 bg-gradient-to-r from-[#36e66e] to-[#f9f047] hover:bg-gradient-to-r hover:from-[#0fd850] hover:to-[#f9f047] transition-all duration-500 ring-slate-900 hover:ring-black flex items-center justify-center text-black">
+                        Sign Up
+                    </Link>
+                    <Link to="/users/signin" className="relative w-40 h-12 rounded-3xl text-lg font-bold border-none overflow-hidden z-10 bg-gradient-to-r from-[#36e66e] to-[#f9f047] hover:bg-gradient-to-r hover:from-[#0fd850] hover:to-[#f9f047] transition-all duration-500 ring-slate-900 hover:ring-black flex items-center justify-center text-black">
+                        Sign In
+                    </Link>
+                </div>
+            </div>
+        </div>
+    );
+};
 
-  const capitalizeFirstLetter = (string) => {
-    if (!string) return '';
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
-  
-  return (
-    <div>
-       {/* <div class="w-14 flex flex-row items-center justify-between">
-          <div class="w-3 h-3 rounded-full bg-pink-500 transform -translate-y-full animate-wave delay-[0.4s]"></div>
-          <div class="w-3 h-3 rounded-full bg-pink-500 transform -translate-y-full animate-wave delay-[0.2s]"></div>
-          <div class="w-3 h-3 rounded-full bg-pink-500 transform -translate-y-full animate-wave"></div>
-        </div> */}
-
-        <h1 className="text-3xl font-bold text-gray-800">Welcome {capitalizeFirstLetter(currentUser?.username)}</h1>
-        <TodoList />
-
-
-    </div>
-
-
-  )
-}
-
-export default Home
+export default Homepage;

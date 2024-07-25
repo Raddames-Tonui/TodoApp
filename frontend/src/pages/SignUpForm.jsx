@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { toast } from "react-toastify";
-import { SiProtodotio } from "react-icons/si";
+import { BiSolidBadgeCheck } from "react-icons/bi";
 
 function SignUpForm() {
   const { register_user } = useContext(UserContext);
@@ -29,15 +29,15 @@ function SignUpForm() {
   console.log(username)
 
   return (
-    <section className="bg-gray-100 min-h-screen flex items-center justify-center py-12 px-6 lg:px-8">
+    <section className="bg-slate-200 h-screen flex items-center justify-center py-12 px-6 lg:px-8">
       <div className="bg-white mx-auto flex flex-col items-center justify-center px-6 max-w-md w-full py-6 rounded-md shadow-md">
-        <SiProtodotio className='text-3xl text-green-500 mx-auto h-10 w-auto' />
+        <BiSolidBadgeCheck className='text-4xl  text-[#35ca22] mx-auto h-12 w-auto' />
 
-        <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Create your account
         </h2>
         
-        <form onSubmit={handleSubmit} className="space-y-6 mt-8 w-full">
+        <form onSubmit={handleSubmit} className="space-y-2 mt-2 w-full">
           <div>
             <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
               Username
@@ -122,10 +122,10 @@ function SignUpForm() {
             </div>
           </div>
 
-          <div>
+          <div className="mt-4">
             <button
               type="submit"
-              className="relative w-full h-10 rounded-md text-sm font-inherit border-none overflow-hidden z-10 shadow-[6px_6px_12px_#c5c5c5,-6px_-6px_12px_#ffffff] bg-gradient-to-r from-[#0fd850] to-[#f9f047] hover:before:content-[''] hover:before:w-full hover:before:h-full hover:before:absolute hover:before:top-0 hover:before:left-0 hover:before:rounded-full hover:before:bg-gradient-to-r hover:before:from-[#0fd850] hover:before:to-[#f9f047] hover:before:transition-all hover:before:duration-500"
+              className="relative w-full h-10 rounded-md text-md font-bold border-none overflow-hidden z-10 bg-gradient-to-r from-[#49f544] to-[#f9f047] hover:bg-gradient-to-r hover:from-[#0fd80f] hover:to-[#35ca22] ring-1 ring-gray-600 transition-all duration-500"
               onClick={handleSubmit}
             >
               Sign Up
