@@ -7,8 +7,9 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState("Raddames");
-
-    const register_user = (username, email, avatar) => {
+    
+// REGISTER USER
+    const register_user = (username, email, avatar, password) => {
         fetch(`${server_url}/users`, {
             method: "POST",
             headers: {
@@ -17,7 +18,8 @@ export const UserProvider = ({ children }) => {
             body: JSON.stringify({
                 avatar: avatar,
                 email: email,
-                username: username
+                username: username,
+                password: password
             })
         })
         .then((response) => response.json())
