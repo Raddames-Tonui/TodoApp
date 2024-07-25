@@ -36,7 +36,7 @@ def index():
     return "Hello, World!"
 # ===================== AUTHENTICATION ======================
 # Login
-@app.route("/login", methods=["POST"])
+@app.route("/users/login", methods=["POST"])
 def login_user():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
@@ -50,20 +50,27 @@ def login_user():
     else:
         return jsonify({"message": "Check your username or password"}), 401
 
-# Fetch Current user
-@app.route("/current_user", methods=["GET"])
+@app.route("/users/current_user", methods=["GET"])
 @jwt_required()
 def current_user():
-    current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
+    try:
+        current_user_id = get_jwt_identity()
+        user = User.query.get(current_user_id)
+        
+        if user is None:
+            return jsonify({"error": "User not found"}), 404
+        
+        user_data = {
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "avatar": user.avatar
+        }
+        
+        return jsonify(user_data), 200
 
-    # user_data = {
-    #     "id": user.id,
-    #     "name": user.name,
-    #     "email": user.email,
-    #     "avatar" : user.avatar
-    # }
-    return jsonify([user.to_dict()]), 200
+    except Exception as e:
+        return jsonify({"error": "An unexpected error occurred", "details": str(e)}), 500
 
 # Logout
 BLACKLIST = set()
@@ -71,7 +78,7 @@ BLACKLIST = set()
 def check_if_token_in_blocklist(jwt_header, decrypted_token):
     return decrypted_token['jti'] in BLACKLIST
 
-@app.route("/logout", methods=["DELETE"])
+@app.route("/users/logout", methods=["DELETE"])
 @jwt_required()
 def logout():
     jti = get_jwt()["jti"]
