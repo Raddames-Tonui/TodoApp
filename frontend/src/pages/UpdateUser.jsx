@@ -40,7 +40,7 @@ function UpdateUser() {
     }
 
     return (
-        <section className="bg-gray-100 h-screen flex items-center justify-center py-12 px-6 lg:px-8 ">
+        <section className="  flex items-center justify-center py-12 px-6 lg:px-8 ">
             <div className="bg-white mx-auto flex flex-col items-center justify-center px-6 max-w-lg w-full py-6 rounded-md shadow-md">
                 <div className="w-24 h-24 relative overflow-hidden rounded-full">
                     <img 

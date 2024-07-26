@@ -4,7 +4,7 @@ import { BiSolidBadgeCheck } from 'react-icons/bi';
 
 const Homepage = () => {
     return (
-        <div className="h-screen flex flex-col justify-center items-center bg-slate-200 py-12 ">
+        <div className="h-[90vh] flex flex-col justify-center items-center bg-slate-200 py-12 no-scrollbar overflow-y-hidden">
             <div className="bg-white p-10 rounded-lg shadow-md max-w-md w-full">
                 <div className="flex justify-center">
                     <h1 className="flex text-2xl font-bold text-black ml-2">

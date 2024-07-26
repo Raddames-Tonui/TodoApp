@@ -15,7 +15,7 @@ function Login() {
     setPassword("")
   }
   return (
-    <div className="bg-slate-200 h-screen flex items-center justify-center py-12 px-6 lg:px-8">
+    <div className="h-[90vh] flex items-center justify-center py-12 px-6 lg:px-8">
       <div className='bg-white mx-auto flex flex-col items-center justify-center px-6 max-w-md w-full py-6 rounded-md'>
         
       <BiSolidBadgeCheck className='text-4xl  text-[#35ca22] mx-auto h-12 w-auto' />

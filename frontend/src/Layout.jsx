@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 function Layout() {
   return (
-    <>
+    <div className="h-screen overflow-y-scroll no-scrollbar">
       <Navbar />
       <Toaster
         position="top-right"  
@@ -16,8 +16,11 @@ function Layout() {
           }
         }}
       />
-      <Outlet />
-    </>
+      <div className=" bg-slate-200">
+          <Outlet />
+      </div>
+      
+    </div>
   );
 }
 

@@ -1,7 +1,5 @@
 import { useState, createContext, useEffect } from "react";
-// import { toast } from "react-toastify";
 import toast from 'react-hot-toast';
-
 import { server_url } from "../../config.json";
 import { useNavigate } from "react-router-dom";
 
@@ -20,10 +18,10 @@ export const UserProvider = ({ children }) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                avatar: avatar,
-                email: email,
-                username: username,
-                password: password
+                avatar,
+                email,
+                username,
+                password
             })
         })
         .then((response) => response.json())
@@ -42,47 +40,42 @@ export const UserProvider = ({ children }) => {
         });
     };
 
-
     // UPDATE USER
     const update_user = (username, avatar, password) => {
-      const updatePromise = fetch(`${server_url}/users`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${auth_token}`
-        },
-        body: JSON.stringify({
-          username: username,
-          avatar: avatar,
-          password: password
+        const updatePromise = fetch(`${server_url}/users`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${auth_token}`
+            },
+            body: JSON.stringify({
+                username,
+                avatar,
+                password
+            })
         })
-      })
-      .then((response) => response.json())
-      .then(({ success, error }) => {
-        if (success) {
-          return success; 
-        } else if (error) {
-          throw new Error(error); 
-        }
-      })
-      .catch((error) => {
-        throw new Error("Network error: " + error.message); 
-      });
-    
-      // Use toast.promise to handle different states of the promise
-      toast.promise(updatePromise, {
-        loading: 'Saving...',
-        success: <b>Settings saved!</b>,
-        error: (error) => <b>{error.message || 'Could not save.'}</b>,
-      })
-      .then(() => {
-        nav("/users/tasks"); 
-      });
+        .then((response) => response.json())
+        .then(({ success, error }) => {
+            if (success) {
+                return success; 
+            } else if (error) {
+                throw new Error(error); 
+            }
+        })
+        .catch((error) => {
+            throw new Error("Network error: " + error.message); 
+        });
+
+        toast.promise(updatePromise, {
+            loading: 'Saving...',
+            success: <b>Settings saved!</b>,
+            error: (error) => <b>{error.message || 'Could not save.'}</b>,
+        })
+        .then(() => {
+            nav("/users/tasks"); 
+        });
     };
-    
-    
-    
-    
+
     // LOGIN USER
     const login_user = (email, password) => {
         fetch(`${server_url}/users/login`, {
@@ -91,19 +84,17 @@ export const UserProvider = ({ children }) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                email: email,
-                password: password
+                email,
+                password
             })
         })
         .then((response) => response.json())
         .then((res) => {
             if (res.access_token) {
                 localStorage.setItem("access_token", res.access_token);
-                setAuthToken(res.access_token); 
-                toast.success('logged in', {
-                    icon: '👏',
-                  });
-                    nav("/users/tasks");
+                setAuthToken(res.access_token);
+                toast.success('Logged in', { icon: '👏' });
+                nav("/users/tasks");
             } else if (res.message) {
                 toast.error(res.message);
             } else {
@@ -115,34 +106,8 @@ export const UserProvider = ({ children }) => {
         });
     };
 
-    // Fetch current user
-    useEffect(() => {
-        if (!auth_token) return; // Skip if auth_token is null
-
-        fetch(`${server_url}/users/current_user`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${auth_token}`
-            }
-        })
-        .then((response) => response.json())
-        .then((data) => { 
-            // console.log(data.email)
-            if (data.email) {
-                setCurrentUser(data);
-            } else {
-                setCurrentUser(null);
-            }
-        })
-        .catch((error) => {
-            toast.error("Network error: " + error.message);
-        });
-    }, [auth_token]);
-        // console.log(currentUser)
-
     // LOGOUT USER
-    const logout_user = () =>{
+    const logout_user = () => {
         fetch(`${server_url}/users/logout`, {
             method: "DELETE",
             headers: {
@@ -152,7 +117,7 @@ export const UserProvider = ({ children }) => {
         })
         .then((response) => response.json())
         .then((res) => {
-            if (res.success){
+            if (res.success) {
                 localStorage.removeItem("access_token");
                 setAuthToken(null);
                 setCurrentUser(null);
@@ -162,8 +127,37 @@ export const UserProvider = ({ children }) => {
                 toast.error(res.error);
             }
         })
-    }
+        .catch((error) => {
+            toast.error("Network error: " + error.message);
+        });
+    };
 
+    // Fetch current user
+    useEffect(() => {
+        if (!auth_token) return;
+
+        fetch(`${server_url}/users/current_user`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${auth_token}`
+            }
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.email) {
+                setCurrentUser(data);
+            } else {
+                setCurrentUser(null);
+                localStorage.removeItem("access_token");
+                setAuthToken(null);
+                nav("/users/signin");
+            }
+        })
+        .catch((error) => {
+            toast.error("Network error: " + error.message);
+        });
+    }, [auth_token, nav]);
 
     const contextData = {
         currentUser,
@@ -171,7 +165,9 @@ export const UserProvider = ({ children }) => {
         register_user,
         login_user,
         update_user,
-        logout_user
+        logout_user,
+        auth_token
+
     };
 
     return (
