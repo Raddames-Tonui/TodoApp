@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { TodoContext } from '../context/TodoContext';
 import { MdDeleteSweep } from "react-icons/md";
 import { UserContext } from '../context/UserContext';
-import "../style.css"
+import "../style.css";
 
 function TodoList({ handleCompletedChange }) {
   const { todos, deleteTodo } = useContext(TodoContext);
@@ -21,18 +21,18 @@ function TodoList({ handleCompletedChange }) {
   return (
     <div className="h-[70vh] w-full" style={{ backgroundImage: `url(${currentUser?.avatar})`, backgroundSize: 'cover', backgroundPosition: 'top' }}>
       {/* Display Todo */}
-      <ul className="p-8 space-y-4 overflow-y-scroll h-full no-scrollbar bg-white bg-opacity-85">
+      <ul className="p-4 sm:p-6 md:p-8 space-y-4 overflow-y-scroll h-full no-scrollbar bg-white bg-opacity-85">
         {todos && todos.map(todo => (
           <li key={todo.id} className="p-2 border-b border-gray-200">
-            <div className="grid grid-cols-4 items-center justify-between space-x-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 items-center justify-between">
               <div className='flex justify-start'>
-                <span>{todo.title}</span>
+                <span className="text-sm sm:text-base md:text-lg">{todo.title}</span>
               </div>
               <div className='flex justify-center'>
-                <span>{convertToKenyaDate(todo.created)}</span>
+                <span className="text-xs sm:text-sm md:text-base">{convertToKenyaDate(todo.created)}</span>
               </div>
               <div className='flex items-center justify-center'>
-                <label htmlFor={`done-${todo.id}`} className="pr-2">Completed</label>
+                <label htmlFor={`done-${todo.id}`} className="pr-2 text-xs sm:text-sm md:text-base">Completed</label>
                 <input
                   id={`done-${todo.id}`}
                   type="checkbox"
@@ -42,7 +42,7 @@ function TodoList({ handleCompletedChange }) {
                 />
               </div>
               <div className='flex justify-center'>
-                <MdDeleteSweep className='h-7 w-7 text-red-600' onClick={() => deleteTodo(todo.id)} />
+                <MdDeleteSweep className='h-6 w-6 text-red-600 md:h-7 md:w-7' onClick={() => deleteTodo(todo.id)} />
               </div>
             </div>
           </li>

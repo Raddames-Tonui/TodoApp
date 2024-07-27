@@ -80,7 +80,7 @@ const Navbar = () => {
                             {currentUser ? (
                                 <>
                                     <NavLink to="/users/tasks" className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={toggleMobileMenu}>My Tasks</NavLink>
-                                    <NavLink to="/users/profile_update" className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={toggleMobileMenu}>Update profile</NavLink>
+                                    <NavLink to="/users/profile_update" className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={toggleMobileMenu}>Profile</NavLink>
                                     <button className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={logout_user}>
                                         Sign out
                                     </button>

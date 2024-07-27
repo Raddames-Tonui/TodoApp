@@ -15,11 +15,7 @@ const Todo = () => {
   const [title, setTitle] = useState("");
   const [completed, setCompleted] = useState(false);
 
-  useEffect(() => {
-    if (!currentUser) {
-      nav("/users/signin");
-    }
-  }, [currentUser, nav]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

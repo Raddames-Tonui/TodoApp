@@ -50,6 +50,7 @@ def login_user():
     else:
         return jsonify({"message": "Check your username or password"}), 401
 
+# Get current user
 @app.route("/users/current_user", methods=["GET"])
 @jwt_required()
 def current_user():
@@ -64,7 +65,10 @@ def current_user():
             "id": user.id,
             "username": user.username,
             "email": user.email,
-            "avatar": user.avatar
+            "avatar": user.avatar,
+            "created_at": user.created_at,
+            "updated_at": user.updated_at,
+            "todos": [todo.to_dict() for todo in user.todos]
         }
         
         return jsonify(user_data), 200
@@ -164,6 +168,9 @@ def todos():
     todos = Todo.query.all()
 
     if request.method == "GET":
+        # fetch all todos for the current user
+        current_user_id = get_jwt_identity()
+        todos =Todo.query.filter_by(user_id = current_user_id).all()
         return make_response(jsonify([todo.to_dict() for todo in todos]), 200)
 
     elif request.method == "POST":
@@ -199,7 +206,6 @@ def todo(id):
         db.session.delete(todo)
         db.session.commit()
         return make_response(jsonify({"message": "Todo deleted successfully"}), 200)
-
 
 if __name__ == "__main__":
     app.run(debug=True, port=5555)

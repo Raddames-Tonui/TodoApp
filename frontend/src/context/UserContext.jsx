@@ -17,12 +17,7 @@ export const UserProvider = ({ children }) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                avatar,
-                email,
-                username,
-                password
-            })
+            body: JSON.stringify({ avatar, email, username, password })
         })
         .then((response) => response.json())
         .then((res) => {
@@ -48,11 +43,7 @@ export const UserProvider = ({ children }) => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${auth_token}`
             },
-            body: JSON.stringify({
-                username,
-                avatar,
-                password
-            })
+            body: JSON.stringify({ username, avatar, password })
         })
         .then((response) => response.json())
         .then(({ success, error }) => {
@@ -70,9 +61,9 @@ export const UserProvider = ({ children }) => {
             loading: 'Saving...',
             success: <b>Settings saved!</b>,
             error: (error) => <b>{error.message || 'Could not save.'}</b>,
-        })        
+        })
         .then(() => {
-            nav("/users/tasks"); 
+            nav("/users/tasks");
         });
     };
 
@@ -83,10 +74,7 @@ export const UserProvider = ({ children }) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                email,
-                password
-            })
+            body: JSON.stringify({ email, password })
         })
         .then((response) => response.json())
         .then((res) => {
@@ -156,8 +144,11 @@ export const UserProvider = ({ children }) => {
         })
         .catch((error) => {
             toast.error("Network error: " + error.message);
+        
         });
     }, [auth_token, nav]);
+
+    // console.log(currentUser);
 
     const contextData = {
         currentUser,
@@ -167,7 +158,6 @@ export const UserProvider = ({ children }) => {
         update_user,
         logout_user,
         auth_token
-
     };
 
     return (

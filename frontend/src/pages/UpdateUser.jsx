@@ -39,22 +39,22 @@ function UpdateUser() {
     if (!currentUser) {
         return <p>Loading ...</p>;
     }
-
+ 
     return (
-        <section className="  flex items-center justify-center py-12 px-6 lg:px-8 ">
-            <div className="bg-white mx-auto flex flex-col items-center justify-center px-6 max-w-lg w-full py-6 rounded-md shadow-md">
-                <div className="w-24 h-24 relative overflow-hidden rounded-full">
+        <section className="  flex items-center justify-center py-4 px-6 lg:px-8 ">
+            <div className="bg-gray-100 mx-auto flex flex-col items-center justify-center px-6 max-w-lg w-full py-4 rounded-md shadow-md">
+                <div className="w-20 h-20 relative overflow-hidden rounded-full">
                     <img 
                         src={currentUser.avatar} 
                         alt="Profile Picture" 
-                        className="w-full h-full object-cover ring-1" 
+                        className="w-full h-full object-cover ring-2 -300" 
                     />
                 </div>
-                <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                     Update your Profile
                 </h2>
 
-                <form onSubmit={handleSubmit} className="space-y-6 mt-8 w-full">
+                <form onSubmit={handleSubmit} className="space-y-4 mt-2 w-full pb-3">
                     <div>
                         <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
                             Username
