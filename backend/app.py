@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import random
+import random , os
 from flask import Flask, jsonify, make_response, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
@@ -9,13 +9,19 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token, get_jwt
 from datetime import timedelta
 from flask_cors import CORS
+from dotenv import load_dotenv
 
- 
+
+load_dotenv()  # take environment variables from .env.
+postgres_pwd = os.getenv("POSTGRES_PWD")  
+
+# print(postgres_pwd)
 
 from models import db, User, Todo
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://todo_db_y0kz_user:{postgres_pwd}"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "$hhjd4q%h%^#7&893" + str(random.randint(1, 1000000))
 app.config["JWT_SECRET_KEY"] = "a44u5$%*47992n3i*#*#99s29" + str(random.randint(1, 100000))
@@ -33,7 +39,7 @@ CORS(app)
 
 @app.route("/")
 def index():
-    return "Hello, World!"
+    return "Hello, welcome to my TODO app!"
 # ===================== AUTHENTICATION ======================
 # Login
 @app.route("/users/login", methods=["POST"])

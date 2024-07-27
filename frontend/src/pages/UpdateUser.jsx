@@ -37,11 +37,14 @@ function UpdateUser() {
     }
 
     if (!currentUser) {
-        return <p>Loading ...</p>;
-    }
+        return (
+           navigate("/users/signin")
+          
+        );
+      }
  
     return (
-        <section className="  flex items-center justify-center py-4 px-6 lg:px-8 ">
+        <section className=" h-[90vh] flex items-center justify-center py-4 px-6 lg:px-8 ">
             <div className="bg-gray-100 mx-auto flex flex-col items-center justify-center px-6 max-w-lg w-full py-4 rounded-md shadow-md">
                 <div className="w-20 h-20 relative overflow-hidden rounded-full">
                     <img 

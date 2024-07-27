@@ -18,13 +18,13 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="relative bg-gray-800 flex">
+            <div className="relative bg-gray-800 flex h-[10vh]">
                 <div className="container mx-auto flex justify-between items-center py-4 px-6">
                     <div className="flex items-center">
-                        <h1 className="flex text-2xl font-bold text-white ml-2">
+                        <NavLink to="/" className="flex text-2xl font-bold text-white ml-2">
                             Todo
                             <BiSolidBadgeCheck className="text-3xl text-[#35ca22]" />
-                        </h1>
+                        </NavLink>
 
                     </div>
 
@@ -45,7 +45,7 @@ const Navbar = () => {
                                 <img 
                                     src={currentUser?.avatar} 
                                     alt="Profile Picture" 
-                                    className="rounded-full w-12 h-12 ring-2 object-cover" 
+                                    className="rounded-full w-12 h-12 ring-2 ring-[#35ca22] object-cover" 
                                 />
                             </>
                         ) : (

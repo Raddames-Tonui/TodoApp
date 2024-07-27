@@ -19,10 +19,10 @@ function TodoList({ handleCompletedChange }) {
   };
 
   return (
-    <div className="h-[70vh] w-full" style={{ backgroundImage: `url(${currentUser?.avatar})`, backgroundSize: 'cover', backgroundPosition: 'top' }}>
+    <div className=" h-[73vh] rounded-lg" style={{ backgroundImage: `url(${currentUser?.avatar})`, backgroundSize: 'cover', backgroundPosition: 'top' }}>
       {/* Display Todo */}
-      <ul className="p-4 sm:p-6 md:p-8 space-y-4 overflow-y-scroll h-full no-scrollbar bg-white bg-opacity-85">
-        {todos && todos.map(todo => (
+      <ul className="p-4 sm:p-6 md:p-8 space-y-4 overflow-y-scroll h-full no-scrollbar bg-white font-semibold bg-opacity-65 rounded-b-lg">
+        {todos && todos?.map(todo => (
           <li key={todo.id} className="p-2 border-b border-gray-200">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 items-center justify-between">
               <div className='flex justify-start'>

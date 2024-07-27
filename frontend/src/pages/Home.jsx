@@ -15,6 +15,7 @@ const Homepage = () => {
                 <p className="text-center text-gray-600 mb-6">
                     Welcome to Todo App! Your one-stop solution for managing your tasks efficiently.
                 </p>
+
                 <div className="flex flex-col items-center space-y-4">
                     <Link to="/users/signup" className="relative w-40 h-12 rounded-3xl text-lg font-bold border-none overflow-hidden z-10 bg-gradient-to-r from-[#36e66e] to-[#f9f047] hover:bg-gradient-to-r hover:from-[#0fd850] hover:to-[#f9f047] transition-all duration-500 ring-slate-900 hover:ring-black flex items-center justify-center text-black">
                         Sign Up

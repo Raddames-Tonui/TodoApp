@@ -5,12 +5,11 @@ import "../style.css"
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Todo = () => {
   const { addTodo, updateTodo } = useContext(TodoContext);
   const { currentUser } = useContext(UserContext);
-  const nav = useNavigate();
   
   const [title, setTitle] = useState("");
   const [completed, setCompleted] = useState(false);
@@ -31,29 +30,32 @@ const Todo = () => {
     updateTodo(id, {completed})
   }
 
-
-
   if (!currentUser) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="w-14 flex flex-row items-center justify-between">
-          <div className="w-3 h-3 rounded-full bg-green-500 transform -translate-y-full animate-wave delay-[0.4s]"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500 transform -translate-y-full animate-wave delay-[0.2s]"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500 transform -translate-y-full animate-wave"></div>
+      <div className='h-[88vh] flex items-center justify-center'>
+        <div className="dot-spinner relative flex items-center justify-start h-[2.8rem] w-[2.8rem] ">
+          <div className="dot-spinner__dot absolute top-0 left-0 flex items-center justify-start h-full w-full"></div>
+          <div className="dot-spinner__dot absolute top-0 left-0 flex items-center justify-start h-full w-full"></div>
+          <div className="dot-spinner__dot absolute top-0 left-0 flex items-center justify-start h-full w-full"></div>
+          <div className="dot-spinner__dot absolute top-0 left-0 flex items-center justify-start h-full w-full"></div>
+          <div className="dot-spinner__dot absolute top-0 left-0 flex items-center justify-start h-full w-full"></div>
+          <div className="dot-spinner__dot absolute top-0 left-0 flex items-center justify-start h-full w-full"></div>
+          <div className="dot-spinner__dot absolute top-0 left-0 flex items-center justify-start h-full w-full"></div>
+          <div className="dot-spinner__dot absolute top-0 left-0 flex items-center justify-start h-full w-full"></div>
         </div>
       </div>
+
+
     );
   }
 
   return (
-    <div className="h-[88vh] md:w-[60vw] mx-auto px-4 unscrollable-page">
-      <div className="flex items-center justify-between mx-auto w-full">
-        {/* <h1 className="text-xl font-bold mb-4">Welcome {currentUser.username}</h1> */}
-      </div>
+    <div className="h-[90vh] md:w-[60vw] mx-auto px-4 unscrollable-page  ">
+      <div className="p-2   bg-slate-100 h-full">
+        <h1 className="text-xl font-bold pt-2 pl-5"> {currentUser.username}</h1>
 
-      <div className="mt-6 rounded-md bg-slate-100">
-        <AddTodo handleSubmit={handleSubmit} title={title} setTitle={setTitle} />
-        <TodoList handleCompletedChange={handleCompletedChange} />
+          <AddTodo handleSubmit={handleSubmit} title={title} setTitle={setTitle} />
+          <TodoList handleCompletedChange={handleCompletedChange} />
       </div>
     </div>
   );

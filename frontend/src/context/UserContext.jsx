@@ -110,7 +110,7 @@ export const UserProvider = ({ children }) => {
                 setAuthToken(null);
                 setCurrentUser(null);
                 toast.success(res.success);
-                nav("/users/signin");
+                nav("/");
             } else {
                 toast.error(res.error);
             }
