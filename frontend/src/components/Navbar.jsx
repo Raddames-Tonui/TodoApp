@@ -18,20 +18,23 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="relative bg-gray-800  flex">
+            <div className="relative bg-gray-800 flex">
                 <div className="container mx-auto flex justify-between items-center py-4 px-6">
                     <div className="flex items-center">
                         <h1 className="flex text-2xl font-bold text-white ml-2">
                             Todo
                             <BiSolidBadgeCheck className="text-3xl text-[#35ca22]" />
                         </h1>
+                        {currentUser && (
+                            <h2 className="text-white font-semibold ml-4">{currentUser.username}</h2>
+                        )}
                     </div>
 
-                        {/* Desktop menu */}
+                    {/* Desktop menu */}
                     <div className="hidden md:flex items-center space-x-6">
-                        {currentUser && (
+                        {currentUser ? (
                             <>
-                                <NavLink to="/users/tasks" className="text-white hover:underline font-semibold hover:font-bold">My Todos</NavLink>
+                                <NavLink to="/users/tasks" className="text-white hover:underline font-semibold hover:font-bold">My Tasks</NavLink>
                                 <NavLink to="/users/profile_update" className="text-white hover:underline font-semibold hover:font-bold">Update profile</NavLink>
                                 <button
                                     className="relative w-24 h-10 rounded-3xl text-sm font-inherit border-none overflow-hidden z-10 bg-gradient-to-r from-[#36e66e] to-[#f9f047] hover:bg-gradient-to-r hover:from-[#0fd850] hover:to-[#35ca22] transition-all duration-500 ring-slate-900 hover:ring-black"
@@ -41,9 +44,13 @@ const Navbar = () => {
                                         Log Out
                                     </span>
                                 </button>
+                                <img 
+                                    src={currentUser?.avatar} 
+                                    alt="Profile Picture" 
+                                    className="rounded-full w-12 h-12 ring-2 object-cover" 
+                                />
                             </>
-                        )}
-                        {!currentUser && (
+                        ) : (
                             <>
                                 <NavLink to="/" className="text-white hover:underline font-semibold hover:font-bold">Home</NavLink>
                                 <NavLink to="/users/signup" className="text-white hover:underline font-semibold hover:font-bold">Sign Up</NavLink>
@@ -58,7 +65,7 @@ const Navbar = () => {
                         )}
                     </div>
 
-                        {/* Mobile menu */}
+                    {/* Mobile menu */}
                     <div className="md:hidden flex items-center">
                         <button onClick={toggleMobileMenu}>
                             {isMobileMenuOpen ? <FaTimes className="text-2xl text-white" /> : <FaBars className="text-2xl text-white" />}
@@ -74,22 +81,19 @@ const Navbar = () => {
                         <div className="flex flex-col items-center space-y-6 py-4 px-6">
                             {currentUser ? (
                                 <>
-                                    <NavLink to="/users/tasks" className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={toggleMobileMenu}>My Todos</NavLink>
-                                    <NavLink to="/users/profile_update" className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={toggleMobileMenu}>Update</NavLink>
+                                    <NavLink to="/users/tasks" className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={toggleMobileMenu}>My Tasks</NavLink>
+                                    <NavLink to="/users/profile_update" className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={toggleMobileMenu}>Update profile</NavLink>
+                                    <button className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={logout_user}>
+                                        Sign out
+                                    </button>
                                 </>
                             ) : (
                                 <>
                                     <NavLink to="/" className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={toggleMobileMenu}>Home</NavLink>
                                     <NavLink to="/users/signup" className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={toggleMobileMenu}>Sign Up</NavLink>
+                                    <NavLink to="/users/signin" className="text-white hover:text-gray-900 text-2xl font-semibold" onClick={toggleMobileMenu}>Sign In</NavLink>
                                 </>
                             )}
-                            <button className="text-white hover:text-gray-900 text-2xl font-semibold">
-                                {currentUser ? (
-                                    <span onClick={logout_user} className="relative z-10 text-white">Sign out</span>
-                                ) : (
-                                    <NavLink to="/users/signin" className="relative z-10 text-white" onClick={toggleMobileMenu}>Sign in</NavLink>
-                                )}
-                            </button>
                         </div>
                     </div>
                 </>

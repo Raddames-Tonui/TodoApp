@@ -14,7 +14,7 @@ function UpdateUser() {
 
     useEffect(() => {
         if (!currentUser) {
-            navigate("/users/signin");
+            navigate("/users/profile_update")
         } else {
             setUsername(currentUser.username || "");
             setAvatar(currentUser.avatar || "");
@@ -32,7 +32,8 @@ function UpdateUser() {
     }
 
     function handleCancel() {
-        navigate("/"); 
+        toast.success("canceled")
+        navigate("/users/tasks"); 
     }
 
     if (!currentUser) {
@@ -46,7 +47,7 @@ function UpdateUser() {
                     <img 
                         src={currentUser.avatar} 
                         alt="Profile Picture" 
-                        className="w-full h-full object-cover" 
+                        className="w-full h-full object-cover ring-1" 
                     />
                 </div>
                 <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

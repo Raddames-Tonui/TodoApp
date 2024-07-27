@@ -8,7 +8,7 @@ import NoPage from "./pages/NoPage";
 import Login from "./pages/Login";
 import SignUpForm from "./pages/SignUpForm";
 import UpdateUser from "./pages/UpdateUser";
-import TodoList from "./pages/TodoList";
+import Todo from "./pages/Todo";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/users/signin" element={<Login />} />
               <Route path="/users/signup" element={<SignUpForm />} />
-              <Route path="/users/tasks" element={<TodoList />} />              
+              <Route path="/users/tasks" element={<Todo />} />              
               <Route path="/users/profile_update" element={<UpdateUser/>}/>
               <Route path="*" element={<NoPage />} />
             </Route>

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { server_url } from "../../config.json";
+import { toast } from "react-hot-toast";
 
 export const TodoContext = createContext();
 
@@ -8,8 +9,8 @@ export const TodoProvider = ({ children }) => {
     const [todos, setTodos] = useState([]);
     const { auth_token } = useContext(UserContext);
 
+    // FETCH TODO
     useEffect(() => {
-        // Ensure auth_token is available before making a request
         if (!auth_token) return;
 
         fetch(`${server_url}/todos`, {
@@ -21,21 +22,87 @@ export const TodoProvider = ({ children }) => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 setTodos(data);
             })
             .catch(error => {
                 console.error("Error fetching todos:", error);
             });
-    }, [auth_token]); 
+    }, [auth_token]);
 
-    const context_data = {
+    // ADD TODO
+    const addTodo = (title, completed, user_id) => {
+        fetch(`${server_url}/todos`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${auth_token}`
+            },
+            body: JSON.stringify({ 
+                title, 
+                completed, 
+                user_id
+            })
+        })
+        .then(response => response.json())
+        .then(newTodo => {
+            setTodos(prevTodos => [...prevTodos, newTodo]);
+            toast.success("Task added successfully");
+        })
+        .catch(error => {
+            toast.error("Network error: " + error.message);
+        });
+    };
+
+    // UPDATE TODO
+    const updateTodo = (id, updatedData) => {
+        fetch(`${server_url}/todos/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${auth_token}`
+            },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(updatedTodo => {
+            setTodos(prevTodos => 
+                prevTodos.map(todo => (todo.id === id ? updatedTodo : todo))
+            );
+            toast.success("Task updated successfully");
+        })
+        .catch(error => {
+            toast.error("Network error: " + error.message);
+        });
+    };
+
+    // DELETE TODO
+    const deleteTodo = (id) => {
+        fetch(`${server_url}/todos/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${auth_token}`
+            }
+        })
+        .then(() => {
+            setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+            toast.success("Task deleted successfully");
+        })
+        .catch(error => {
+            toast.error("Network error: " + error.message);
+        });
+    };
+
+    // console.log(todos)
+
+    const contextData = {
         todos,
-        setTodos
+        addTodo,
+        updateTodo,
+        deleteTodo,
     };
 
     return (
-        <TodoContext.Provider value={context_data}>
+        <TodoContext.Provider value={contextData}>
             {children}
         </TodoContext.Provider>
     );

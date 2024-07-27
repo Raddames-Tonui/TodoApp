@@ -178,7 +178,7 @@ def todos():
         return make_response(jsonify(new_todo.to_dict()), 201)
 
 
-@app.route("/todos/<int:id>", methods=["GET", "PATCH", "DELETE"])
+@app.route("/todos/<int:id>", methods=["GET", "PUT", "DELETE"])
 @jwt_required()
 def todo(id):
     todo = Todo.query.get_or_404(id)
@@ -186,11 +186,10 @@ def todo(id):
     if request.method == "GET":
         return make_response(jsonify(todo.to_dict()), 200)
 
-    elif request.method == "PATCH":
+    elif request.method == "PUT":
         data = request.get_json()
-        for key, value in data.items():
-            setattr(todo, key, value)
-        db.session.add(todo)
+        todo.title = data.get("title", todo.title)
+        todo.completed = data.get("completed", todo.completed)
         db.session.commit()
         return make_response(jsonify(todo.to_dict()), 200)
 

@@ -59,22 +59,25 @@ class Todo(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    def __init__(self, title, completed=False, user_id=None):
-        self.title = title
-        self.completed = completed
-        self.user_id = user_id
-        self.validate()
+    # def __init__(self, title, completed=False, user_id=None):
+    #     self.title = title
+    #     self.completed = completed
+    #     self.user_id = user_id
+    #     self.validate()
 
-    def validate(self):
-        if not self.title or len(self.title) < 3:
-            raise ValueError("Title must be at least 3 characters long.")
+    # def validate(self):
+    #     if not self.title or len(self.title) < 3:
+    #         raise ValueError("Title must be at least 3 characters long.")
 
     def to_dict(self):
         return {
             "id": self.id,
             "title": self.title,
-            "completed": self.completed
+            "completed": self.completed,
+            "created" : self.created_at,
+            "updated" : self.updated_at,
+            "user_id" : self.user_id
         }
 
-    def __repr__(self):
-        return f"<Todo(title='{self.title}')>"
+    # def __repr__(self):
+    #     return f"<Todo(title='{self.title}')>"

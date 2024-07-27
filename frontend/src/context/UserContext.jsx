@@ -70,7 +70,7 @@ export const UserProvider = ({ children }) => {
             loading: 'Saving...',
             success: <b>Settings saved!</b>,
             error: (error) => <b>{error.message || 'Could not save.'}</b>,
-        })
+        })        
         .then(() => {
             nav("/users/tasks"); 
         });

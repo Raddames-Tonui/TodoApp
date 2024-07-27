@@ -28,3 +28,20 @@
    button:hover::before {
     width: 9em;
    } */
+
+
+   /* Add this to your CSS file or within a <style> block */
+.unscrollable-page {
+    height: 100vh; /* Full height */
+    overflow: hidden; /* Disable scrolling on the body */
+  }
+  
+  .scrollable-list {
+    height: calc(100vh - 10rem); /* Adjust this value as necessary */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  .profile-background {
+    background-size: cover;
+    background-position: center;
+}

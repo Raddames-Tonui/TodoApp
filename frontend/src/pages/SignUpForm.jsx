@@ -47,7 +47,7 @@ function SignUpForm() {
                 type="text"
                 id="username"
                 placeholder="Username"
-                value={username}
+                value={username || ""}
                 onChange={(e) => setUsername(e.target.value)}
                 className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
                 required
@@ -64,7 +64,7 @@ function SignUpForm() {
                 type="email"
                 id="email"
                 placeholder="name@example.com"
-                value={email}
+                value={email || ""}
                 onChange={(e) => setEmail(e.target.value)}
                 className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
                 required
@@ -81,7 +81,7 @@ function SignUpForm() {
                 type="password"
                 id="password"
                 placeholder="Password"
-                value={password}
+                value={password || ""}
                 onChange={(e) => setPassword(e.target.value)}
                 className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
                 required
@@ -98,7 +98,7 @@ function SignUpForm() {
                 type="password"
                 id="repeatPassword"
                 placeholder="Confirm Password"
-                value={repeatPassword}
+                value={repeatPassword || ""}
                 onChange={(e) => setRepeatPassword(e.target.value)}
                 className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
                 required
@@ -115,7 +115,7 @@ function SignUpForm() {
                 type="text"
                 id="avatar"
                 placeholder="Enter URL"
-                value={avatar}
+                value={avatar || ""}
                 onChange={(e) => setAvatar(e.target.value)}
                 className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
               />
