@@ -29,30 +29,38 @@ export const TodoProvider = ({ children }) => {
             });
     }, [auth_token]);
 
-    // ADD TODO
-    const addTodo = (title, completed, user_id) => {
+    const addTodo = (title, completed) => {
+        if (!title.trim()) {
+            toast.error("Task title cannot be empty");
+            return;
+        }
+    
         fetch(`${server_url}/todos`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${auth_token}`
             },
-            body: JSON.stringify({ 
-                title, 
-                completed, 
-                user_id
+            body: JSON.stringify({
+                title,
+                completed
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(newTodo => {
             setTodos(prevTodos => [...prevTodos, newTodo]);
             toast.success("Task added successfully");
         })
         .catch(error => {
-            toast.error("Network error: " + error.message);
+            toast.error(`Network error: ${error.message}`);
         });
     };
-
+    
     // UPDATE TODO
     const updateTodo = (id, updatedData) => {
         fetch(`${server_url}/todos/${id}`, {

@@ -4,7 +4,7 @@ import { MdDeleteSweep } from "react-icons/md";
 import { UserContext } from '../context/UserContext';
 import "../style.css"
 
-function TodoList() {
+function TodoList({ handleCompletedChange }) {
   const { todos, deleteTodo } = useContext(TodoContext);
   const { currentUser } = useContext(UserContext);
 
@@ -12,9 +12,9 @@ function TodoList() {
     const date = new Date(timestamp);
     return date.toLocaleDateString('en-KE', {
       timeZone: 'Africa/Nairobi',
-      weekday: 'short', // 'long' for full weekday name
-      month: 'short',   // 'long' for full month name
-      day: '2-digit'    // ensures the day is always two digits
+      weekday: 'short',
+      month: 'short',
+      day: '2-digit'
     });
   };
 
@@ -32,13 +32,13 @@ function TodoList() {
                 <span>{convertToKenyaDate(todo.created)}</span>
               </div>
               <div className='flex items-center justify-center'>
-                <label htmlFor="done" className="pr-2">Completed</label>
+                <label htmlFor={`done-${todo.id}`} className="pr-2">Completed</label>
                 <input
-                  id="done"
+                  id={`done-${todo.id}`}
                   type="checkbox"
                   checked={todo.completed}
-                  readOnly
                   className="form-checkbox h-4 w-4 text-green-600"
+                  onChange={() => handleCompletedChange(todo.id, !todo.completed)}
                 />
               </div>
               <div className='flex justify-center'>

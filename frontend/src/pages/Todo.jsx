@@ -5,31 +5,37 @@ import "../style.css"
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const Todo = () => {
   const { addTodo, updateTodo } = useContext(TodoContext);
   const { currentUser } = useContext(UserContext);
-
+  const nav = useNavigate();
+  
   const [title, setTitle] = useState("");
   const [completed, setCompleted] = useState(false);
-  const [user_id, setUserId] = useState("");
 
   useEffect(() => {
-    if (currentUser) {
-      setUserId(currentUser.id || "");
+    if (!currentUser) {
+      nav("/users/signin");
     }
-  }, [currentUser]);
+  }, [currentUser, nav]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title === "") {
       toast.error("Task can't be empty");
     } else {
-      addTodo(title, completed, user_id);
+      addTodo(title, completed);
       setTitle("");
-      setUserId("");
     }
   };
+
+  const handleCompletedChange =(id, completed) => {
+    updateTodo(id, {completed})
+  }
+
+
 
   if (!currentUser) {
     return (
@@ -51,7 +57,7 @@ const Todo = () => {
 
       <div className="mt-6 rounded-md bg-slate-100">
         <AddTodo handleSubmit={handleSubmit} title={title} setTitle={setTitle} />
-        <TodoList />
+        <TodoList handleCompletedChange={handleCompletedChange} />
       </div>
     </div>
   );

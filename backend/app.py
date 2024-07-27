@@ -168,10 +168,12 @@ def todos():
 
     elif request.method == "POST":
         data = request.get_json()
+
+        current_user_id = get_jwt_identity()
         new_todo = Todo(
             title=data.get("title"),
             completed=data.get("completed"),
-            user_id=data.get("user_id")
+            user_id=current_user_id
         )
         db.session.add(new_todo)
         db.session.commit()

@@ -25,9 +25,7 @@ const Navbar = () => {
                             Todo
                             <BiSolidBadgeCheck className="text-3xl text-[#35ca22]" />
                         </h1>
-                        {currentUser && (
-                            <h2 className="text-white font-semibold ml-4">{currentUser.username}</h2>
-                        )}
+
                     </div>
 
                     {/* Desktop menu */}
