@@ -36,6 +36,7 @@ Update Profile
 ### Deployment
 
 - **Netlify**: Deployment platform for the frontend.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/69d6e67f-1b30-40e5-be9b-6abf018367e6/deploy-status)](https://app.netlify.com/sites/todoappstarter/deploys)
 - **Render**: Deployment platform for the backend.
 
 ## Getting Started
