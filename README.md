@@ -59,7 +59,7 @@ Update Profile
    ```bash
     cd frontend
     npm install
-
+    npm run dev
 3. **Install backend dependencies:**
 
    ```bash
