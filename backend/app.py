@@ -11,8 +11,8 @@ from datetime import timedelta
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-
 load_dotenv()  # take environment variables from .env.
+
 postgres_user = os.getenv("POSTGRES_USER")
 postgres_pwd = os.getenv("POSTGRES_PASSWORD")  
 postgres_host = os.getenv("POSTGRES_HOST")
@@ -29,8 +29,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{postgres_user}:{postgres
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db" # SQLITE SETUP
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = "$hhjd4q%h%^#7&893" + str(random.randint(1, 1000000))
-app.config["JWT_SECRET_KEY"] = "a44u5$%*47992n3i*#*#99s29" + str(random.randint(1, 100000))
+app.config["SECRET_KEY"] = "$hhjd4q%h%^#7&893" 
+app.config["JWT_SECRET_KEY"] = "a44u5$%*47992n3i*#*#99s29" 
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 
 app.json.compact = False
