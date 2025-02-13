@@ -13,15 +13,21 @@ from dotenv import load_dotenv
 
 
 load_dotenv()  # take environment variables from .env.
-postgres_pwd = os.getenv("POSTGRES_PWD")  
+postgres_user = os.getenv("POSTGRES_USER")
+postgres_pwd = os.getenv("POSTGRES_PASSWORD")  
+postgres_host = os.getenv("POSTGRES_HOST")
+postgres_port = os.getenv("POSTGRES_PORT")
+postgres_db = os.getenv("POSTGRES_DB")
 
-# print(postgres_pwd)
+print( postgres_user, postgres_pwd, postgres_host, postgres_port, postgres_db)
 
 from models import db, User, Todo
 
 app = Flask(__name__)
-# app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://todo_db_y0kz_user:{postgres_pwd}"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{postgres_user}:{postgres_pwd}@{postgres_host}:{postgres_port}/{postgres_db}"
+# app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://todo_db_y0kz_user:{postgres_pwd}" # For deployment in render
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db" # SQLITE SETUP
+
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "$hhjd4q%h%^#7&893" + str(random.randint(1, 1000000))
 app.config["JWT_SECRET_KEY"] = "a44u5$%*47992n3i*#*#99s29" + str(random.randint(1, 100000))

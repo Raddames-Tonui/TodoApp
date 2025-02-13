@@ -1,3 +1,5 @@
+# SINGLE BUILD STAGE
+
 # Use official Node.js image as the base image alpine is slim
 FROM node:18-alpine
 
