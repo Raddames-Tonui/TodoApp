@@ -2,4 +2,6 @@ node_modules
 dist
 Dockerfile
 .dockerignore
-
+.eslintrc.cjs
+netlify.toml
+README.md

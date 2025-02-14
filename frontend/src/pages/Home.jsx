@@ -4,8 +4,15 @@ import { BiSolidBadgeCheck } from 'react-icons/bi';
 
 const Homepage = () => {
     return (
-        <div className="h-[90vh] flex flex-col justify-center items-center bg-slate-200 py-12 no-scrollbar overflow-y-hidden">
-            <div className="bg-white p-10 rounded-lg shadow-md max-w-md w-full">
+        <div className="relative h-[90vh] flex flex-col justify-center items-center bg-slate-200 py-12 no-scrollbar overflow-hidden">
+            {/* Floating Circles */}
+            <ul className="circles absolute inset-0 overflow-hidden -z-10">
+                {Array.from({ length: 10 }).map((_, index) => (
+                    <li key={index} className={`absolute bg-white opacity-20 rounded-full animate-floating`} />
+                ))}
+            </ul>
+
+            <div className="bg-white p-10 rounded-lg shadow-md max-w-md w-full relative z-10">
                 <div className="flex justify-center">
                     <h1 className="flex text-2xl font-bold text-black ml-2">
                         Todo

@@ -2,6 +2,8 @@
 
 # 1. ---- Base Image (Build Stage) ----
     FROM node:18-alpine AS builder
+    #Author :Raddames
+    LABEL maintainer="Raddames <raddamestonui95@gmail.com>"
 
     WORKDIR /app
     

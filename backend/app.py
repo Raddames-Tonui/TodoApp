@@ -46,6 +46,13 @@ CORS(app)
 @app.route("/")
 def index():
     return "Hello, welcome to my TODO app!"
+
+# Checking the health of the app in containers
+# This prevents frontend crashes if the backend isn't ready.
+@app.route('/health')
+def health():
+    return "OK", 200
+
 # ===================== AUTHENTICATION ======================
 # Login
 @app.route("/users/login", methods=["POST"])

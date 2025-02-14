@@ -1,7 +1,7 @@
 services: 
   db:
     image: postgres:15
-    container_name: todo_db
+    container_name: todo_postgres_db
     restart: always
     env_file:
       - .env
@@ -10,9 +10,9 @@ services:
     volumes:
       - data:/var/lib/postgresql/data  
 
-  web:
+  flask:
     build: .
-    container_name: todo_backend
+    container_name: todo_flask_backend
     restart: always
     depends_on:
       - db
@@ -26,7 +26,7 @@ services:
 
   migrate:
     build: .
-    container_name: todo_migrate
+    container_name: todo_flask_migrate
     depends_on:
       - db
     entrypoint: flask db upgrade  # Run migrations
