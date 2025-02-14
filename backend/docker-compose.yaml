@@ -1,0 +1,39 @@
+services: 
+  db:
+    image: postgres:15
+    container_name: todo_db
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/var/lib/postgresql/data  
+
+  web:
+    build: .
+    container_name: todo_backend
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    command: gunicorn -b 0.0.0.0:5000 app:app  # Start the app without migrations here
+
+  migrate:
+    build: .
+    container_name: todo_migrate
+    depends_on:
+      - db
+    entrypoint: flask db upgrade  # Run migrations
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+
+volumes:
+  data:

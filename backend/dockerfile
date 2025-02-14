@@ -1,0 +1,28 @@
+# Use the official Python 3.9 image as the base image
+FROM python:3.9
+
+# Set the working directory in the container to /app
+WORKDIR /app
+
+# Copy the requirements.txt file into the container
+# This file contains the list of dependencies to install
+COPY requirements.txt .
+
+# Install the dependencies listed in requirements.txt
+# --no-cache-dir ensures no cached files are used, keeping the image smaller
+RUN pip install --no-cache-dir -r requirements.txt  
+
+# Copy the rest of the application code into the container
+# This assumes all your application files (including app.py) are in the current directory
+COPY . .
+
+# Set environment variable for Flask to know which file to run as the application
+ENV FLASK_APP=app.py 
+
+# Set Flask to listen on all IP addresses (0.0.0.0) inside the container
+# This allows the app to be accessible from outside the container
+ENV FLASK_RUN_HOST=0.0.0.0
+
+# Set the command to run when the container starts
+# Gunicorn will serve the Flask application on port 5000
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
