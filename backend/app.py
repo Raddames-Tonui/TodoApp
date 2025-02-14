@@ -19,7 +19,7 @@ postgres_host = os.getenv("POSTGRES_HOST")
 postgres_port = os.getenv("POSTGRES_PORT")
 postgres_db = os.getenv("POSTGRES_DB")
 
-print( postgres_user, postgres_pwd, postgres_host, postgres_port, postgres_db)
+# print( postgres_user, postgres_pwd, postgres_host, postgres_port, postgres_db)
 
 from models import db, User, Todo
 

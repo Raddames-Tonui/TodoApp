@@ -7,11 +7,13 @@ __pycache__
 migrations/
 docker-compose.yaml
 Dockerfile
+dockerfile.txt
+dockerfile
 seed.py
 script.sh
 README.md
-pipfile.lock
-pipfile
+Pipfile.lock
+Pipfile
 env.txt
 
 .git

@@ -1,28 +1,41 @@
-# Use the official Python 3.9 image as the base image
-FROM python:3.9
+# BACKEND DOCKERFILE (Python Flask)
 
-# Set the working directory in the container to /app
+# Stage 1: Build Stage (Uses full Python image for dependency installation)
+FROM python:3.9 AS builder
+
 WORKDIR /app
 
-# Copy the requirements.txt file into the container
-# This file contains the list of dependencies to install
+# Copy requirements and install dependencies in a virtual environment
 COPY requirements.txt .
+RUN python -m venv /venv && \
+    /venv/bin/pip install --no-cache-dir -r requirements.txt
 
-# Install the dependencies listed in requirements.txt
-# --no-cache-dir ensures no cached files are used, keeping the image smaller
-RUN pip install --no-cache-dir -r requirements.txt  
+# Stage 2: Minimal Production Image (Uses slim image to keep size small)
+FROM python:3.9-slim
 
-# Copy the rest of the application code into the container
-# This assumes all your application files (including app.py) are in the current directory
+WORKDIR /app
+
+# Install curl for healthcheck
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+
+# Copy only the necessary application files
+COPY --from=builder /venv /venv
 COPY . .
 
-# Set environment variable for Flask to know which file to run as the application
-ENV FLASK_APP=app.py 
+# Makes migrate.sh executable to be used for migrations
+RUN chmod +x /app/migrate.sh
+
 
 # Set Flask to listen on all IP addresses (0.0.0.0) inside the container
 # This allows the app to be accessible from outside the container
-ENV FLASK_RUN_HOST=0.0.0.0
+# LASK_APP=app.py Set environment variable for Flask to know which file to run as the application 
+ENV FLASK_APP=app.py \ 
+    FLASK_RUN_HOST=0.0.0.0 \
+    PATH="/venv/bin:$PATH"
 
 # Set the command to run when the container starts
 # Gunicorn will serve the Flask application on port 5000
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+CMD ["/venv/bin/gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+
+
