@@ -44,7 +44,7 @@ This guide will walk you through the deployment process for the Todo App, includ
     import os
 
     load_dotenv()  # take environment variables from .env
-    postgres_pwd = os.getenv("POSTGRES_PWD")  
+    postgres_pwd = os.getenv("POSTGRES_PASSWORD")  
 
     app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://todo_db_y0kz_user:{postgres_pwd}"
     ```
